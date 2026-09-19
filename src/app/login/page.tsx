@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { corsi } from '@/data/corsi'
 
 function GoogleIcon() {
   return (
@@ -24,7 +25,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [mode, setMode] = useState<'login' | 'signup'>('login')
 
-  // Se sei già loggato, vai alla dashboard
+  const corsiTotali = corsi.length
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) router.replace('/')
@@ -57,7 +59,7 @@ export default function LoginPage() {
         setLoading(false)
         setMsg('Accesso non riuscito. Riprova.')
       }
-    } catch (e) {
+    } catch {
       setLoading(false)
       setMsg('Errore imprevisto. Riprova.')
     }
@@ -84,7 +86,7 @@ export default function LoginPage() {
       setMsg(
         'Registrazione inviata. Controlla la tua email e clicca il link di conferma.'
       )
-    } catch (e) {
+    } catch {
       setLoading(false)
       setMsg('Errore imprevisto. Riprova.')
     }
@@ -114,19 +116,34 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10 max-w-md">
-          <p className="eyebrow mb-6">Il tuo metodo, più lontano</p>
-          <h1 className="text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05]">
-            Impara con <br />
-            <span className="serif font-normal">intenzione.</span>
+          <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] mb-6">
+            Piattaforma didattica di informatica per il liceo.
           </h1>
-          <p className="text-text-muted mt-8 max-w-sm">
-            Un ambiente ordinato per costruire competenze digitali che restano.
-          </p>
+          <ul className="space-y-3 text-text-muted text-sm">
+            <li className="flex gap-3">
+              <span className="text-accent">→</span>
+              <span>Biennio: Word, Excel, PowerPoint e competenze digitali.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-accent">→</span>
+              <span>Triennio: oltre 50 linguaggi, web, database e sistemi.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-accent">→</span>
+              <span>Lezioni con esempi, esercizi, soluzioni e quiz.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-accent">→</span>
+              <span>Progressi salvati sul tuo account, su ogni dispositivo.</span>
+            </li>
+          </ul>
         </div>
 
-        <div className="text-xs text-text-muted z-10 flex gap-6">
-          <span className="text-accent">01</span>
-          <span>Un percorso chiaro, ogni giorno</span>
+        <div className="text-xs text-text-muted z-10">
+          <p>
+            {corsiTotali} percorsi pianificati · progettata per una scuola di
+            circa 1000 studenti.
+          </p>
         </div>
 
         <div

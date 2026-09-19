@@ -34,6 +34,15 @@ function IconCode() {
   )
 }
 
+function IconSettings() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+      <circle cx="8" cy="8" r="2" />
+      <path d="M8 1.5v2M8 12.5v2M14.5 8h-2M3.5 8h-2M12.6 3.4l-1.4 1.4M4.8 11.2l-1.4 1.4M12.6 12.6l-1.4-1.4M4.8 4.8 3.4 3.4" />
+    </svg>
+  )
+}
+
 function IconShield() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -70,7 +79,7 @@ function Logo() {
         </svg>
       </div>
       <span className="text-sm font-bold tracking-wider text-text">
-        TECH <span className="font-normal text-text-muted">ACADEMY</span>
+        KERNEL <span className="font-normal text-text-muted">ACADEMY</span>
       </span>
     </div>
   )
@@ -83,6 +92,7 @@ const mainNav = [
 ]
 
 const resNav = [
+  { href: '/impostazioni', label: 'Impostazioni', icon: <IconSettings /> },
   { href: '/privacy', label: 'Privacy', icon: <IconShield /> },
   { href: '/cookie', label: 'Cookie', icon: <IconFile /> },
 ]
@@ -100,7 +110,7 @@ export function Sidebar() {
 
   async function logout() {
     await supabase.auth.signOut()
-    router.push('/login')
+    router.replace('/login')
   }
 
   const initial = email?.[0]?.toUpperCase() ?? 'S'

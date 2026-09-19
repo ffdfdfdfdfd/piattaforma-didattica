@@ -18,6 +18,7 @@ export function Topbar() {
   let page = 'Panoramica'
   if (pathname === '/corsi') page = 'Catalogo percorsi'
   else if (pathname.startsWith('/corsi/')) page = 'Percorso'
+  else if (pathname === '/impostazioni') page = 'Impostazioni'
   else if (pathname === '/privacy') page = 'Privacy'
   else if (pathname === '/cookie') page = 'Cookie'
 
