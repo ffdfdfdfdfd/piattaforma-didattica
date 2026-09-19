@@ -22,37 +22,81 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [msg, setMsg] = useState('')
   const [loading, setLoading] = useState(false)
+  const [mode, setMode] = useState<'login' | 'signup'>('login')
 
+  // Se sei già loggato, vai alla dashboard
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) router.push('/')
+      if (data.user) router.replace('/')
     })
   }, [router])
 
   async function signIn() {
+    setMsg('')
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    setLoading(false)
-    if (error) setMsg(error.message)
-    else router.push('/')
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      })
+      if (error) {
+        setLoading(false)
+        if (error.message.toLowerCase().includes('email not confirmed')) {
+          setMsg('Devi confermare la tua email. Controlla la casella di posta.')
+        } else if (error.message.toLowerCase().includes('invalid login')) {
+          setMsg('Email o password non corretti.')
+        } else {
+          setMsg(error.message)
+        }
+        return
+      }
+      if (data.session) {
+        router.refresh()
+        router.replace('/')
+      } else {
+        setLoading(false)
+        setMsg('Accesso non riuscito. Riprova.')
+      }
+    } catch (e) {
+      setLoading(false)
+      setMsg('Errore imprevisto. Riprova.')
+    }
   }
 
   async function signUp() {
+    setMsg('')
     setLoading(true)
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { emailRedirectTo: window.location.origin },
-    })
-    setLoading(false)
-    setMsg(error ? error.message : 'Registrazione inviata. Controlla la tua email.')
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: { emailRedirectTo: window.location.origin },
+      })
+      setLoading(false)
+      if (error) {
+        if (error.message.toLowerCase().includes('already registered')) {
+          setMsg('Questa email è già registrata. Prova ad accedere.')
+        } else {
+          setMsg(error.message)
+        }
+        return
+      }
+      setMsg(
+        'Registrazione inviata. Controlla la tua email e clicca il link di conferma.'
+      )
+    } catch (e) {
+      setLoading(false)
+      setMsg('Errore imprevisto. Riprova.')
+    }
   }
 
   async function google() {
-    await supabase.auth.signInWithOAuth({
+    setMsg('')
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin },
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     })
+    if (error) setMsg(error.message)
   }
 
   return (
@@ -65,7 +109,7 @@ export default function LoginPage() {
             </svg>
           </div>
           <span className="text-sm font-bold tracking-wider">
-            TECH <span className="font-normal text-text-muted">ACADEMY</span>
+            KERNEL <span className="font-normal text-text-muted">ACADEMY</span>
           </span>
         </div>
 
@@ -109,16 +153,19 @@ export default function LoginPage() {
           </div>
 
           <p className="text-[11px] uppercase tracking-[0.14em] text-cream-muted mb-4 font-medium">
-            Bentornato
+            {mode === 'login' ? 'Bentornato' : 'Nuovo studente'}
           </p>
           <h2 className="text-4xl font-semibold tracking-tight mb-3">
-            Accedi al tuo spazio.
+            {mode === 'login' ? 'Accedi al tuo spazio.' : 'Crea il tuo spazio.'}
           </h2>
           <p className="text-cream-muted mb-10">
-            Riprendi da dove avevi lasciato.
+            {mode === 'login'
+              ? 'Riprendi da dove avevi lasciato.'
+              : 'Un account, tutti i tuoi progressi.'}
           </p>
 
           <button
+            type="button"
             onClick={google}
             className="w-full flex items-center justify-center gap-3 border border-cream-border bg-white rounded-md py-3 text-sm font-medium hover:bg-cream/50 transition-colors"
           >
@@ -135,58 +182,89 @@ export default function LoginPage() {
             <div className="h-px flex-1 bg-cream-border" />
           </div>
 
-          <label className="block mb-4">
-            <span className="text-xs font-medium text-cream-text mb-1.5 block">Email</span>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
-              placeholder="nome@scuola.it"
-              className="w-full bg-white border border-cream-border rounded-md px-3 py-2.5 text-sm outline-none focus:border-cream-text"
-            />
-          </label>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              if (mode === 'login') signIn()
+              else signUp()
+            }}
+          >
+            <label className="block mb-4">
+              <span className="text-xs font-medium text-cream-text mb-1.5 block">
+                Email
+              </span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+                placeholder="nome@scuola.it"
+                className="w-full bg-white border border-cream-border rounded-md px-3 py-2.5 text-sm outline-none focus:border-cream-text"
+              />
+            </label>
 
-          <label className="block mb-6">
-            <span className="text-xs font-medium text-cream-text mb-1.5 block">Password</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-              placeholder="••••••••"
-              className="w-full bg-white border border-cream-border rounded-md px-3 py-2.5 text-sm outline-none focus:border-cream-text"
-            />
-          </label>
+            <label className="block mb-6">
+              <span className="text-xs font-medium text-cream-text mb-1.5 block">
+                Password
+              </span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                required
+                minLength={6}
+                placeholder="••••••••"
+                className="w-full bg-white border border-cream-border rounded-md px-3 py-2.5 text-sm outline-none focus:border-cream-text"
+              />
+            </label>
 
-          <div className="flex gap-2">
             <button
-              onClick={signIn}
+              type="submit"
               disabled={loading}
-              className="flex-1 bg-cream-text text-cream rounded-md py-3 text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="w-full bg-cream-text text-cream rounded-md py-3 text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
             >
-              Accedi con email
+              {loading
+                ? 'Attendi...'
+                : mode === 'login'
+                ? 'Accedi'
+                : 'Crea account'}
             </button>
-            <button
-              onClick={signUp}
-              disabled={loading}
-              className="border border-cream-border rounded-md px-4 py-3 text-sm hover:bg-white transition-colors disabled:opacity-50"
-            >
-              Registrati
-            </button>
-          </div>
+          </form>
+
+          <button
+            type="button"
+            onClick={() => {
+              setMode(mode === 'login' ? 'signup' : 'login')
+              setMsg('')
+            }}
+            className="mt-4 text-xs text-cream-muted hover:text-cream-text underline"
+          >
+            {mode === 'login'
+              ? 'Non hai un account? Registrati'
+              : 'Hai già un account? Accedi'}
+          </button>
 
           {msg && (
-            <p className="mt-5 text-xs text-cream-muted" role="status">
+            <p
+              className="mt-5 text-xs text-cream-text bg-white/60 border border-cream-border rounded-md px-3 py-2"
+              role="status"
+            >
               {msg}
             </p>
           )}
 
           <p className="text-xs text-cream-muted mt-8 leading-relaxed">
             Accedendo accetti la{' '}
-            <Link href="/privacy" className="underline text-cream-text">Privacy Policy</Link>
-            {' '}e la{' '}
-            <Link href="/cookie" className="underline text-cream-text">Cookie Policy</Link>.
+            <Link href="/privacy" className="underline text-cream-text">
+              Privacy Policy
+            </Link>{' '}
+            e la{' '}
+            <Link href="/cookie" className="underline text-cream-text">
+              Cookie Policy
+            </Link>
+            .
           </p>
         </div>
 
