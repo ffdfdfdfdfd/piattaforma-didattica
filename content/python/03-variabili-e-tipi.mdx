@@ -1,0 +1,293 @@
+---
+title: "Variabili e tipi di dati"
+level: "base"
+prerequisiti: ["Introduzione a Python", "Installare Python"]
+obiettivi:
+  - "Dichiarare e usare variabili"
+  - "Riconoscere i tipi int, float, str, bool, NoneType"
+  - "Convertire tra tipi diversi"
+  - "Usare f-string per formattare l'output"
+---
+
+## Cosa sono le variabili
+
+Una variabile è un nome che punta a un valore. In Python non devi dichiarare il tipo: lo assegni e basta.
+
+```python
+nome = "Marco"
+eta = 14
+altezza = 1.72
+studente = True
+Quattro variabili, quattro tipi diversi, nessuna dichiarazione esplicita. Python capisce il tipo dal valore.
+
+I tipi principali
+Tipo	Esempio	Descrizione
+int	42, -3, 1000000	Numeri interi, senza limite di dimensione
+float	3.14, -0.5, 2.0	Numeri con la virgola
+str	"ciao", 'Marco'	Testo, sequenza di caratteri
+bool	True, False	Valori logici
+NoneType	None	Assenza di valore
+Per sapere il tipo di una variabile, usa type():
+
+python
+eta = 14
+print(type(eta))  # <class 'int'>
+
+prezzo = 9.99
+print(type(prezzo))  # <class 'float'>
+
+nome = "Marco"
+print(type(nome))  # <class 'str'>
+Assegnazione
+Il simbolo = non significa "uguale" come in matematica. Significa "prendi il valore a destra e mettilo nella variabile a sinistra".
+
+python
+x = 5     # x vale 5
+x = x + 1 # ora x vale 6
+Puoi assegnare più variabili in una riga:
+
+python
+a, b, c = 1, 2, 3
+E puoi scambiare due variabili senza una terza variabile temporanea:
+
+python
+a, b = b, a
+Nomi validi per le variabili
+Regole:
+
+Devono iniziare con una lettera o con _.
+
+Possono contenere lettere, numeri e _.
+
+Non possono contenere spazi, punti, trattini.
+
+Non possono essere parole riservate del linguaggio (if, for, class, ecc.).
+
+Sono sensibili alle maiuscole: nome e Nome sono diverse.
+
+Convenzione della comunità Python (PEP 8):
+
+snake_case per variabili e funzioni: nome_utente, calcola_media.
+
+UPPER_CASE per costanti: PI_GRECO, MAX_TENTATIVI.
+
+CamelCase per classi: ContoBancario, StudenteLiceo.
+
+Conversioni tra tipi
+A volte hai una stringa e ti serve un numero:
+
+python
+testo = "42"
+numero = int(testo)
+print(numero + 1)  # 43
+Oppure hai un numero e ti serve una stringa:
+
+python
+n = 42
+s = str(n)
+print("Il numero è " + s)
+Attenzione: int("ciao") dà errore:
+
+text
+ValueError: invalid literal for int() with base 10: 'ciao'
+Anche int("3.14") dà errore, perché int non accetta la virgola. Devi passare da float:
+
+python
+n = int(float("3.14"))  # 3
+Convertire un float in int tronca la parte decimale, non arrotonda.
+
+Operazioni sugli interi
+python
+print(7 + 3)   # 10
+print(7 - 3)   # 4
+print(7 * 3)   # 21
+print(7 / 3)   # 2.3333...  divisione normale, dà sempre float
+print(7 // 3)  # 2          divisione intera
+print(7 % 3)   # 1          resto
+print(7 ** 3)  # 343        potenza
+La differenza tra / e // è importantissima:
+
+python
+print(10 / 2)  # 5.0 (float!)
+print(10 // 2) # 5   (int)
+Anche se il risultato è intero, / restituisce sempre un float.
+
+Stringhe
+Una stringa si scrive tra apici singoli o doppi. Sono equivalenti:
+
+python
+a = "ciao"
+b = 'ciao'
+Se il testo contiene apici, scegli il tipo opposto:
+
+python
+frase = "L'auto è rossa"
+altra = 'Il libro dice "ciao"'
+Puoi unire stringhe con +:
+
+python
+saluto = "Ciao, " + "Marco"
+print(saluto)  # Ciao, Marco
+E ripeterle con *:
+
+python
+print("ab" * 3)  # ababab
+Le stringhe sono sequenze: puoi accedere ai singoli caratteri per indice.
+
+python
+s = "Python"
+print(s[0])   # P
+print(s[1])   # y
+print(s[-1])  # n (l'ultimo)
+print(s[0:3]) # Pyt (dal carattere 0 al 2, escluso il 3)
+Le stringhe sono immutabili. Non puoi modificarle in posto:
+
+python
+s = "ciao"
+s[0] = "C"  # errore: TypeError
+Devi crearne una nuova:
+
+python
+s = "C" + s[1:]  # "Ciao"
+f-string
+Il modo moderno per formattare testo:
+
+python
+nome = "Marco"
+eta = 14
+print(f"Ciao, mi chiamo {nome} e ho {eta} anni")
+Dentro {} puoi mettere qualsiasi espressione:
+
+python
+a = 5
+b = 3
+print(f"{a} + {b} = {a + b}")  # 5 + 3 = 8
+Puoi anche formattare i numeri:
+
+python
+pi = 3.14159
+print(f"{pi:.2f}")  # 3.14, due cifre decimali
+Booleani
+Due valori: True e False, con la maiuscola.
+
+python
+maggiorenne = False
+studente = True
+Operatori di confronto che producono booleani:
+
+python
+print(5 > 3)   # True
+print(5 < 3)   # False
+print(5 == 5)  # True (uguaglianza, due uguali)
+print(5 != 3)  # True (diverso)
+Attenzione a non confondere = (assegnazione) con == (confronto).
+
+None
+None è il valore che indica assenza di valore. Non è zero, non è stringa vuota: è proprio "niente".
+
+python
+risultato = None
+Spesso si usa come valore iniziale prima di riempirlo:
+
+python
+migliore = None
+for voto in [7, 9, 6, 8]:
+    if migliore is None or voto > migliore:
+        migliore = voto
+Errori comuni
+Usare una variabile prima di assegnarla.
+
+python
+print(x)  # NameError: name 'x' is not defined
+x = 5
+Concatenare stringa e numero senza convertire.
+
+python
+eta = 14
+print("Ho " + eta + " anni")  # TypeError
+Corretto:
+
+python
+print("Ho " + str(eta) + " anni")
+# oppure
+print(f"Ho {eta} anni")
+Confondere / e //. Se ti serve un int, usa //.
+
+Sovrascrivere una variabile senza accorgersene.
+
+python
+x = 5
+x = "ciao"  # ora x è una stringa
+print(x + 1)  # errore
+Python non si lamenta quando cambi tipo. Sta a te essere disciplinato.
+
+Buone pratiche
+Usa nomi descrittivi. voti_studente è meglio di v.
+
+Non usare nomi come l, O, I: si confondono con 1 e 0.
+
+Una variabile, un compito. Non riutilizzarla per cose diverse.
+
+Preferisci le f-string alla concatenazione con +.
+
+Scorciatoie utili
+Azione	Comando
+Tipo di una variabile	type(x)
+Convertire in intero	int(x)
+Convertire in float	float(x)
+Convertire in stringa	str(x)
+Lunghezza di una stringa	len(s)
+Esercizi guidati
+Esercizio 1. Crea tre variabili nome, cognome, eta e stampa una frase con f-string.
+
+Soluzione:
+
+python
+nome = "Marco"
+cognome = "Rossi"
+eta = 14
+print(f"{nome} {cognome} ha {eta} anni")
+Esercizio 2. Chiedi all'utente il suo anno di nascita e calcola l'età approssimativa.
+
+Soluzione:
+
+python
+anno = int(input("In che anno sei nato? "))
+eta = 2026 - anno
+print(f"Hai circa {eta} anni")
+input() restituisce sempre una stringa, quindi va convertita con int.
+
+Esercizio 3. Calcola l'area di un cerchio con raggio 5 e stampala con due decimali.
+
+Soluzione:
+
+python
+raggio = 5
+area = 3.14159 * raggio ** 2
+print(f"Area: {area:.2f}")
+Esercizi autonomi
+Chiedi nome e età all'utente e stampa un saluto personalizzato.
+
+Chiedi due numeri e stampa somma, differenza, prodotto, quoziente e resto.
+
+Chiedi una temperatura in Celsius e convertila in Fahrenheit con la formula F = C * 9/5 + 32. Stampa il risultato con due decimali.
+
+Riepilogo
+Le variabili in Python non hanno tipo dichiarato: lo prendono dal valore.
+
+I tipi principali sono int, float, str, bool, NoneType.
+
+type() mostra il tipo di un valore.
+
+Le conversioni tra tipi si fanno con int(), float(), str().
+
+Le f-string sono il modo moderno per formattare l'output.
+
+Le stringhe sono immutabili.
+
+Lezioni correlate
+Precedente: installare Python.
+
+Prossima: input e output.
+
+Riferimento: docs.python.org/3/library/stdtypes.html
