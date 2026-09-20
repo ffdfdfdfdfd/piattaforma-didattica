@@ -1,32 +1,38 @@
-import Link from 'next/link'
-
 export const metadata = { title: 'Cookie Policy' }
 
 export default function CookiePage() {
   return (
-    <div className="min-h-screen bg-bg text-text">
-      <header className="border-b border-border">
-        <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-sm font-bold tracking-wider no-underline text-text">
-            KERNEL <span className="font-normal text-text-muted">ACADEMY</span>
-          </Link>
-          <Link href="/login" className="text-sm text-accent no-underline hover:text-text">
-            Accedi
-          </Link>
-        </div>
-      </header>
-      <div className="max-w-3xl mx-auto px-6 py-12">
-        <p className="eyebrow mb-4">Informativa</p>
-        <h1 className="text-3xl font-semibold tracking-tight mb-8">Cookie Policy</h1>
-        <div className="space-y-6 text-sm text-text-muted leading-relaxed">
-          <p>
-            Al momento vengono usati solo cookie tecnici necessari
-            all&apos;autenticazione. Se verranno aggiunti cookie di analisi o di
-            terze parti, sarà richiesto un consenso esplicito prima del loro uso.
+    <div className="max-w-2xl mx-auto px-6 py-12">
+      <div className="mb-12 pb-8 border-b border-border">
+        <p className="label text-text-muted mb-3">Informativa</p>
+        <h1 className="text-4xl font-semibold tracking-tight">
+          Cookie Policy
+        </h1>
+      </div>
+
+      <div className="space-y-8 text-sm leading-relaxed">
+        <p className="text-text-muted">
+          Questa pagina descrive i cookie usati dalla piattaforma. Al momento
+          vengono usati solo cookie tecnici necessari all&apos;autenticazione.
+          Se in futuro verranno aggiunti cookie di analisi o di terze parti,
+          sarà richiesto un consenso esplicito prima del loro utilizzo.
+        </p>
+
+        <section>
+          <h2 className="label text-text-muted mb-3">Cookie tecnici</h2>
+          <p className="text-text">
+            Necessari per mantenere l&apos;accesso dopo il login. Non
+            richiedono consenso.
           </p>
-          <h2 className="text-base font-semibold text-text pt-4">Cookie tecnici</h2>
-          <p>Necessari per mantenere l&apos;accesso dopo il login.</p>
-        </div>
+        </section>
+
+        <section>
+          <h2 className="label text-text-muted mb-3">Cookie di terze parti</h2>
+          <p className="text-text">
+            Attualmente nessuno. Se ne verranno aggiunti, questa pagina sarà
+            aggiornata e sarà richiesto il consenso.
+          </p>
+        </section>
       </div>
     </div>
   )

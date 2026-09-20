@@ -1,37 +1,45 @@
-import Link from 'next/link'
-
 export const metadata = { title: 'Privacy Policy' }
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-bg text-text">
-      <header className="border-b border-border">
-        <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-sm font-bold tracking-wider no-underline text-text">
-            KERNEL <span className="font-normal text-text-muted">ACADEMY</span>
-          </Link>
-          <Link href="/login" className="text-sm text-accent no-underline hover:text-text">
-            Accedi
-          </Link>
-        </div>
-      </header>
-      <div className="max-w-3xl mx-auto px-6 py-12">
-        <p className="eyebrow mb-4">Informativa</p>
-        <h1 className="text-3xl font-semibold tracking-tight mb-8">Privacy Policy</h1>
-        <div className="space-y-6 text-sm text-text-muted leading-relaxed">
-          <p>
-            Questa pagina descrive come vengono trattati i dati degli utenti.
-            Il contenuto definitivo deve essere completato e validato dalla
-            scuola, che è il titolare del trattamento.
+    <div className="max-w-2xl mx-auto px-6 py-12">
+      <div className="mb-12 pb-8 border-b border-border">
+        <p className="label text-text-muted mb-3">Informativa</p>
+        <h1 className="text-4xl font-semibold tracking-tight">
+          Privacy Policy
+        </h1>
+      </div>
+
+      <div className="space-y-8 text-sm leading-relaxed">
+        <p className="text-text-muted">
+          Questa pagina descrive come vengono trattati i dati degli utenti
+          della piattaforma. Il contenuto definitivo deve essere completato e
+          validato dalla scuola, che è il titolare del trattamento.
+        </p>
+
+        <section>
+          <h2 className="label text-text-muted mb-3">Dati raccolti</h2>
+          <p className="text-text">
+            Email e password cifrata per l&apos;accesso. I progressi nelle
+            lezioni e i risultati dei quiz sono associati all&apos;account.
           </p>
-          <h2 className="text-base font-semibold text-text pt-4">Dati raccolti</h2>
-          <p>
-            Email e password cifrata per l&apos;accesso. Progressi nelle lezioni
-            e risultati dei quiz sono associati all&apos;account.
+        </section>
+
+        <section>
+          <h2 className="label text-text-muted mb-3">Finalità</h2>
+          <p className="text-text">
+            I dati servono solo a far funzionare l&apos;accesso e a mostrare a
+            ogni studente i propri progressi. Non vengono ceduti a terzi.
           </p>
-          <h2 className="text-base font-semibold text-text pt-4">Titolare e contatti</h2>
-          <p>Da compilare a cura della scuola. Nessun dato inventato.</p>
-        </div>
+        </section>
+
+        <section>
+          <h2 className="label text-text-muted mb-3">Titolare e contatti</h2>
+          <p className="text-text">
+            Da compilare a cura della scuola. Questa sezione non contiene dati
+            inventati.
+          </p>
+        </section>
       </div>
     </div>
   )
