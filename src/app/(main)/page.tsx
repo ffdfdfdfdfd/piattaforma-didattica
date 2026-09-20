@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { corsi } from '@/data/corsi'
@@ -22,14 +23,26 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-      <div className="mb-14">
-        <p className="label text-text-muted mb-3">Area studenti</p>
-        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-2">
-          Ciao, {nome}.
-        </h1>
-        <p className="text-text-muted">
-          Scegli un corso per iniziare. {corsi.length} percorsi disponibili.
-        </p>
+      <div className="mb-14 grid md:grid-cols-[1fr_auto] gap-8 items-center">
+        <div>
+          <p className="label text-text-muted mb-3">Area studenti</p>
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-2">
+            Ciao, {nome}.
+          </h1>
+          <p className="text-text-muted">
+            Scegli un corso per iniziare. {corsi.length} percorsi disponibili.
+          </p>
+        </div>
+        <div className="hidden md:block">
+          <Image
+            src="/surfer.png"
+            alt=""
+            width={220}
+            height={220}
+            className="select-none"
+            priority
+          />
+        </div>
       </div>
 
       <section className="mb-16">

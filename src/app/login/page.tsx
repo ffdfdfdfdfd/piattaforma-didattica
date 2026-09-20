@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
@@ -70,11 +71,19 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-bg flex flex-col">
-      <div className="pt-14 sm:pt-20 pb-10 px-6">
-        <h1 className="brand text-center text-[88px] sm:text-[140px] md:text-[180px] lg:text-[220px]">
+      <div className="pt-14 sm:pt-16 pb-8 px-6 flex flex-col items-center">
+        <Image
+          src="/logo.png"
+          alt="Kernel Academy"
+          width={120}
+          height={120}
+          priority
+          className="mb-6"
+        />
+        <h1 className="brand text-center text-[64px] sm:text-[100px] md:text-[130px]">
           KERNEL
         </h1>
-        <p className="label text-center text-text-muted mt-5">
+        <p className="label text-center text-text-muted mt-4">
           Piattaforma didattica di informatica per il liceo
         </p>
       </div>
