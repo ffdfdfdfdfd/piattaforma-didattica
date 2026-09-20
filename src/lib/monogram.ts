@@ -14,7 +14,7 @@ export function monogramFor(slug: string, titolo: string): string {
     html: 'HT', css: 'CS', cassandra: 'CA', neo4j: 'N4',
     couchdb: 'CO', dynamodb: 'DY', redis: 'RD',
     assembly: 'ASM', r: 'R', matlab: 'ML', julia: 'JL',
-    cobol: 'CB', fortran: 'FT', 'objective-c': 'OBJ',
+    cobol: 'CB', fortran: 'FT',
     groovy: 'GR', oracle: 'OR',
   }
   return overrides[slug] ?? titolo.substring(0, 2).toUpperCase()
