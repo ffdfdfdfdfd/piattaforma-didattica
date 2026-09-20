@@ -1,8 +1,17 @@
+import Link from 'next/link'
+
 export const metadata = { title: 'Cookie Policy' }
 
 export default function CookiePage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
+      <Link
+        href="/"
+        className="label text-text-muted hover:text-text transition-colors inline-flex items-center gap-2 mb-10"
+      >
+        ← Indietro
+      </Link>
+
       <div className="mb-12 pb-8 border-b border-border">
         <p className="label text-text-muted mb-3">Informativa</p>
         <h1 className="text-4xl font-semibold tracking-tight">
