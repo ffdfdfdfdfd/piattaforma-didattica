@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // Rotte pubbliche: chiunque può accedervi senza login
-  const publicRoutes = ['/login', '/privacy', '/cookie']
+ const publicRoutes = ['/login', '/privacy', '/cookie', '/auth']
   const isPublicRoute = publicRoutes.some((route) =>
     pathname.startsWith(route)
   )
