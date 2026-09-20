@@ -1,123 +1,115 @@
-
 'use client'
 
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { corsi, getCorso } from '@/data/corsi'
-import { getLezioniCorso } from '@/lib/lezioni'
+import { useState } from 'react'
+import { corsi } from '@/data/corsi'
+import { Folder, colorForIndex } from '@/components/folder'
+import { monogramFor } from '@/lib/monogram'
 
-export function generateStaticParams() {
-  return corsi.map((c) => ({ slug: c.slug }))
-}
+export default function CorsiPage() {
+  const [q, setQ] = useState('')
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const c = getCorso(slug)
-  return { title: c ? c.titolo : 'Corso' }
-}
+  const filtered = corsi.filter((c) =>
+    (c.titolo + ' ' + c.descrizione + ' ' + c.categoria)
+      .toLowerCase()
+      .includes(q.toLowerCase())
+  )
 
-export default async function CorsoPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const corso = getCorso(slug)
-  if (!corso) notFound()
+  const biennio = filtered.filter((c) => c.anno === '1-2')
+  const triennio = filtered.filter((c) => c.anno !== '1-2')
 
-  const lezioni = getLezioniCorso(slug)
+  const gruppi = [
+    { nome: 'Linguaggi di programmazione', corsi: triennio.filter((c) => c.categoria === 'Linguaggi') },
+    { nome: 'Sviluppo web e frontend', corsi: triennio.filter((c) => c.categoria === 'Frontend') },
+    { nome: 'Database relazionali', corsi: triennio.filter((c) => c.categoria === 'SQL') },
+    { nome: 'Database NoSQL', corsi: triennio.filter((c) => c.categoria === 'NoSQL') },
+    { nome: 'Sistemi e basso livello', corsi: triennio.filter((c) => c.categoria === 'Sistemi') },
+    { nome: 'Linguaggi storici e settoriali', corsi: triennio.filter((c) => c.categoria === 'Storici') },
+  ]
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
-      <Link
-        href="/corsi"
-        className="label text-text-muted hover:text-text transition-colors inline-flex items-center gap-2"
-      >
-        ← Catalogo
-      </Link>
-
-      <div className="mt-10 mb-12 pb-10 border-b border-border">
-        <p className="label text-text-muted mb-4">{corso.categoria}</p>
-        <h1 className="text-5xl sm:text-6xl font-semibold tracking-tight mb-5">
-          {corso.titolo}
+    <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="mb-10">
+        <p className="label text-text-muted mb-3">Catalogo</p>
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-6">
+          Tutti i corsi
         </h1>
-        <p className="text-text-muted max-w-2xl leading-relaxed text-base">
-          {corso.descrizione}
-        </p>
+
+        <div className="flex items-center gap-3 border-b border-border pb-4 max-w-md">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            className="text-text-muted"
+          >
+            <circle cx="7" cy="7" r="5" />
+            <path d="m11 11 3 3" />
+          </svg>
+          <input
+            type="text"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Cerca un corso"
+            aria-label="Cerca un corso"
+            className="w-full bg-transparent border-0 outline-none text-sm placeholder:text-text-dim"
+          />
+          <span className="label text-text-muted shrink-0">
+            {filtered.length}
+          </span>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-6 mb-16">
-        <div>
-          <p className="label text-text-muted mb-2">Anno</p>
-          <p className="text-base">{corso.anno}</p>
-        </div>
-        <div>
-          <p className="label text-text-muted mb-2">Difficoltà</p>
-          <p className="text-base capitalize">{corso.difficolta}</p>
-        </div>
-        <div>
-          <p className="label text-text-muted mb-2">Lezioni</p>
-          <p className="text-base">{lezioni.length}</p>
-        </div>
-        <div>
-          <p className="label text-text-muted mb-2">Categoria</p>
-          <p className="text-base">{corso.categoria}</p>
-        </div>
-      </div>
-
-      {corso.prerequisiti.length > 0 && (
+      {biennio.length > 0 && (
         <section className="mb-16">
-          <p className="label text-text-muted mb-4">Prerequisiti</p>
-          <ul className="space-y-2 text-base">
-            {corso.prerequisiti.map((p) => (
-              <li key={p} className="flex gap-4">
-                <span className="text-text-dim shrink-0">—</span>
-                <span>{p}</span>
-              </li>
+          <div className="mb-8 pb-4 border-b border-border">
+            <h2 className="text-xl font-semibold">Biennio</h2>
+            <p className="text-sm text-text-muted mt-1">
+              Competenze digitali e Microsoft Office.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-10">
+            {biennio.map((c, i) => (
+              <Folder
+                key={c.slug}
+                color={colorForIndex(i)}
+                monogram={monogramFor(c.slug, c.titolo)}
+                label={c.titolo}
+                href={`/corsi/${c.slug}`}
+              />
             ))}
-          </ul>
+          </div>
         </section>
       )}
 
-      <section>
-        <div className="flex items-end justify-between gap-4 mb-6 pb-4 border-b border-border">
-          <h2 className="text-2xl font-semibold">Programma</h2>
-          <span className="label text-text-muted shrink-0">
-            {lezioni.length} lezioni
-          </span>
-        </div>
+      {gruppi.map((g, gi) =>
+        g.corsi.length > 0 ? (
+          <section key={g.nome} className="mb-16">
+            <div className="mb-8 pb-4 border-b border-border">
+              <h2 className="text-xl font-semibold">Triennio · {g.nome}</h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-10">
+              {g.corsi.map((c, i) => (
+                <Folder
+                  key={c.slug}
+                  color={colorForIndex(i + gi)}
+                  monogram={monogramFor(c.slug, c.titolo)}
+                  label={c.titolo}
+                  href={`/corsi/${c.slug}`}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null
+      )}
 
-        {lezioni.length === 0 ? (
-          <p className="text-sm text-text-muted py-8">
-            Le lezioni di questo corso saranno aggiunte nelle prossime fasi.
-          </p>
-        ) : (
-          <ol>
-            {lezioni.map((l, i) => (
-              <li key={l.slug}>
-                <Link
-                  href={`/corsi/${slug}/${l.slug}`}
-                  className="group flex items-baseline gap-6 py-5 border-b border-border hover:bg-surface-2 -mx-3 px-3 transition-colors"
-                >
-                  <span className="text-text-dim text-xs tabular-nums w-8 shrink-0 font-mono">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="flex-1 text-base">
-                    {l.titolo}
-                  </span>
-                  <span className="label text-text-muted shrink-0">
-                    {l.livello}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        )}
-      </section>
+      {filtered.length === 0 && (
+        <p className="text-sm text-text-muted py-12 text-center">
+          Nessun corso trovato per &ldquo;{q}&rdquo;.
+        </p>
+      )}
     </div>
   )
 }
