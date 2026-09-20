@@ -19,136 +19,177 @@ Al momento della scrittura la versione stabile è la 3.12. Se stai iniziando, in
 3. Clicca "Install Now" e aspetta.
 4. Alla fine, apri il Prompt dei comandi e scrivi:
 
-```bash
+```
 python --version
-Dovresti vedere qualcosa come Python 3.12.1.
+```
 
-Installazione su macOS
-Due strade:
+Dovresti vedere qualcosa come `Python 3.12.1`.
 
-Con Homebrew (consigliata se ce l'hai già):
+## Installazione su macOS
 
-bash
+Due strade.
+
+**Con Homebrew** (consigliata se ce l'hai già):
+
+```
 brew install python
-Con l'installer ufficiale: scarica il pacchetto .pkg da python.org/downloads e aprilo.
+```
+
+**Con l'installer ufficiale:** scarica il pacchetto `.pkg` da [python.org/downloads](https://www.python.org/downloads/) e aprilo.
 
 Per verificare:
 
-bash
+```
 python3 --version
-Su macOS il comando si chiama spesso python3 perché il sistema riserva python a una vecchia versione di sistema.
+```
 
-Installazione su Linux
+Su macOS il comando si chiama spesso `python3` perché il sistema riserva `python` a una vecchia versione di sistema.
+
+## Installazione su Linux
+
 Sulla maggior parte delle distribuzioni Python 3 è già installato. Verifica:
 
-bash
+```
 python3 --version
+```
+
 Se non c'è, installa con il gestore pacchetti della tua distribuzione.
 
 Su Debian o Ubuntu:
 
-bash
+```
 sudo apt update
 sudo apt install python3 python3-pip
+```
+
 Su Fedora:
 
-bash
+```
 sudo dnf install python3
-La differenza tra python e python3
-Su Windows, di solito, python è la versione 3. Su macOS e Linux il comando python può puntare a una vecchia versione di sistema, quindi si usa python3.
+```
+
+## La differenza tra python e python3
+
+Su Windows, di solito, `python` è la versione 3. Su macOS e Linux il comando `python` può puntare a una vecchia versione di sistema, quindi si usa `python3`.
 
 Per non sbagliare mai, puoi controllare:
 
-bash
+```
 python --version
 python3 --version
-Se il primo dà errore e il secondo no, usa sempre python3.
+```
 
-pip, il gestore di pacchetti
-pip installa librerie aggiuntive scritte da altre persone. Verifica che ci sia:
+Se il primo dà errore e il secondo no, usa sempre `python3`.
 
-bash
+## pip, il gestore di pacchetti
+
+`pip` installa librerie aggiuntive scritte da altre persone. Verifica che ci sia:
+
+```
 pip --version
+```
+
 Se non c'è, su Windows puoi installarlo con:
 
-bash
+```
 python -m ensurepip --upgrade
+```
+
 Su Linux:
 
-bash
+```
 sudo apt install python3-pip
-Per installare una libreria, per esempio requests:
+```
 
-bash
+Per installare una libreria, per esempio `requests`:
+
+```
 pip install requests
-Ambienti virtuali
+```
+
+## Ambienti virtuali
+
 Quando lavori a un progetto serio, non installare le librerie a livello globale. Crea un ambiente virtuale, cioè una cartella isolata con la sua versione di Python e le sue librerie. Così un progetto non rompe un altro.
 
-bash
+```
 python -m venv .venv
+```
+
 Su Windows, attivalo con:
 
-bash
+```
 .venv\Scripts\activate
+```
+
 Su macOS e Linux:
 
-bash
+```
 source .venv/bin/activate
-Quando è attivo, il prompt del terminale mostra (.venv) all'inizio. Da quel momento pip install installa solo in quell'ambiente.
+```
+
+Quando è attivo, il prompt del terminale mostra `(.venv)` all'inizio. Da quel momento `pip install` installa solo in quell'ambiente.
 
 Per uscire:
 
-bash
+```
 deactivate
-Errori comuni
-"python non è riconosciuto come comando interno o esterno". Su Windows, quasi sempre perché non hai spuntato "Add to PATH" durante l'installazione. Soluzione: reinstalla spuntando la casella.
+```
 
-pip: command not found su macOS. Usa pip3 invece di pip.
+## Errori comuni
 
-Installi una libreria ma lo script non la trova. Stai usando un interprete diverso da quello che ha installato la libreria. Controlla con which python (macOS/Linux) o where python (Windows) quale stai usando.
+**"python non è riconosciuto come comando interno o esterno".** Su Windows, quasi sempre perché non hai spuntato "Add to PATH" durante l'installazione. Soluzione: reinstalla spuntando la casella.
 
-Buone pratiche
-Usa sempre un ambiente virtuale per ogni progetto.
+**`pip: command not found` su macOS.** Usa `pip3` invece di `pip`.
 
-Salva la lista delle librerie in un file requirements.txt con:
+**Installi una libreria ma lo script non la trova.** Stai usando un interprete diverso da quello che ha installato la libreria. Controlla con `which python` (macOS/Linux) o `where python` (Windows) quale stai usando.
 
-bash
+## Buone pratiche
+
+- Usa sempre un ambiente virtuale per ogni progetto.
+- Salva la lista delle librerie in un file `requirements.txt` con:
+
+```
 pip freeze > requirements.txt
-Per installare le stesse librerie su un altro computer:
+```
 
-bash
+- Per installare le stesse librerie su un altro computer:
+
+```
 pip install -r requirements.txt
-Scorciatoie utili
-Comando	Cosa fa
-python --version	Versione di Python
-pip install nome	Installa una libreria
-pip list	Elenca le librerie installate
-python -m venv .venv	Crea un ambiente virtuale
-deactivate	Esce dall'ambiente virtuale
-Esercizi guidati
-Esercizio 1. Verifica la versione di Python installata sul tuo computer.
+```
 
-Esercizio 2. Crea un ambiente virtuale nella cartella del progetto e attivalo. Nota come cambia il prompt.
+## Scorciatoie utili
 
-Esercizio 3. Con l'ambiente attivo, installa la libreria rich con pip install rich, poi verifica con pip list.
+| Comando | Cosa fa |
+|---|---|
+| `python --version` | Versione di Python |
+| `pip install nome` | Installa una libreria |
+| `pip list` | Elenca le librerie installate |
+| `python -m venv .venv` | Crea un ambiente virtuale |
+| `deactivate` | Esce dall'ambiente virtuale |
 
-Esercizi autonomi
-Esci dall'ambiente virtuale e verifica che rich non sia più importabile con python -c "import rich".
+## Esercizi guidati
 
-Crea un file requirements.txt con dentro rich e installalo in un nuovo ambiente virtuale.
+**Esercizio 1.** Verifica la versione di Python installata sul tuo computer.
 
-Scrivi uno script che importa rich e stampa una riga colorata con rich.print("[bold red]Ciao[/bold red]").
+**Esercizio 2.** Crea un ambiente virtuale nella cartella del progetto e attivalo. Nota come cambia il prompt.
 
-Riepilogo
-Installa Python 3 dal sito ufficiale, spuntando "Add to PATH" su Windows.
+**Esercizio 3.** Con l'ambiente attivo, installa la libreria `rich` con `pip install rich`, poi verifica con `pip list`.
 
-Usa python3 su macOS e Linux quando python dà errore.
+## Esercizi autonomi
 
-pip installa librerie.
+1. Esci dall'ambiente virtuale e verifica che `rich` non sia più importabile con `python -c "import rich"`.
+2. Crea un file `requirements.txt` con dentro `rich` e installalo in un nuovo ambiente virtuale.
+3. Scrivi uno script che importa `rich` e stampa una riga colorata con `rich.print("[bold red]Ciao[/bold red]")`.
 
-Gli ambienti virtuali isolano le dipendenze di ogni progetto.
+## Riepilogo
 
-Lezioni correlate
-Precedente: introduzione a Python.
+- Installa Python 3 dal sito ufficiale, spuntando "Add to PATH" su Windows.
+- Usa `python3` su macOS e Linux quando `python` dà errore.
+- `pip` installa librerie.
+- Gli ambienti virtuali isolano le dipendenze di ogni progetto.
 
-Prossima: variabili e tipi di dati.
+## Lezioni correlate
+
+- Precedente: introduzione a Python.
+- Prossima: variabili e tipi di dati.
