@@ -41,63 +41,96 @@ export default async function LezionePage({
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-10">
-      <nav className="text-xs text-text-muted mb-8 flex items-center gap-2 flex-wrap">
-        <Link href="/corsi" className="no-underline hover:text-text">Corsi</Link>
+    <div className="max-w-3xl mx-auto px-6 py-12">
+      <nav className="label text-text-muted mb-10 flex items-center gap-2 flex-wrap">
+        <Link href="/corsi" className="hover:text-text transition-colors">
+          Corsi
+        </Link>
         <span className="text-text-dim">/</span>
-        <Link href={`/corsi/${slug}`} className="no-underline hover:text-text">
+        <Link
+          href={`/corsi/${slug}`}
+          className="hover:text-text transition-colors"
+        >
           {corso.titolo}
         </Link>
         <span className="text-text-dim">/</span>
-        <span>Lezione {idx + 1} di {lezioni.length}</span>
+        <span className="text-text">
+          {idx + 1} di {lezioni.length}
+        </span>
       </nav>
 
-      <header className="mb-10">
-        <h1 className="text-3xl font-semibold tracking-tight mb-4">{fm.title}</h1>
-        <div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-wider text-text-muted">
-          {fm.level && (
-            <span className="border border-border rounded-full px-2.5 py-1">
-              Livello {fm.level}
-            </span>
-          )}
-          <span className="border border-border rounded-full px-2.5 py-1">
-            {corso.categoria}
-          </span>
+      <header className="mb-10 pb-8 border-b border-border">
+        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-5">
+          {fm.title}
+        </h1>
+        <div className="flex flex-wrap gap-4 label text-text-muted">
+          {fm.level && <span>Livello · {fm.level}</span>}
+          <span>·</span>
+          <span>{corso.categoria}</span>
         </div>
       </header>
 
       {fm.obiettivi && fm.obiettivi.length > 0 && (
-        <section className="border border-border rounded-xl p-5 bg-surface mb-10">
-          <p className="eyebrow mb-3">Obiettivi di apprendimento</p>
-          <ul className="list-disc pl-5 space-y-1 text-sm">
-            {fm.obiettivi.map((o, i) => <li key={i}>{o}</li>)}
+        <section className="mb-12 pb-8 border-b border-border">
+          <p className="label text-text-muted mb-4">Obiettivi di apprendimento</p>
+          <ul className="space-y-2 text-base">
+            {fm.obiettivi.map((o, i) => (
+              <li key={i} className="flex gap-4">
+                <span className="text-text-dim shrink-0">—</span>
+                <span>{o}</span>
+              </li>
+            ))}
           </ul>
         </section>
       )}
 
-      <article>
+      {fm.prerequisiti && fm.prerequisiti.length > 0 && (
+        <section className="mb-12 pb-8 border-b border-border">
+          <p className="label text-text-muted mb-4">Prerequisiti</p>
+          <ul className="space-y-2 text-base">
+            {fm.prerequisiti.map((p, i) => (
+              <li key={i} className="flex gap-4">
+                <span className="text-text-dim shrink-0">—</span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <article className="prose-kernel">
         <MDXRemote source={data.content} components={mdxComponents} />
       </article>
 
       <MarkComplete corsoSlug={slug} lezioneSlug={lezione} />
 
-      <nav className="flex justify-between gap-4 mt-14 pt-6 border-t border-border">
+      <nav className="flex justify-between gap-4 mt-16 pt-8 border-t border-border">
         {prev ? (
           <Link
             href={`/corsi/${slug}/${prev.slug}`}
-            className="text-sm text-accent no-underline hover:text-text transition-colors"
+            className="group flex flex-col gap-1 max-w-[45%]"
           >
-            ← {prev.titolo}
+            <span className="label text-text-muted">← Precedente</span>
+            <span className="text-sm group-hover:text-text-muted transition-colors">
+              {prev.titolo}
+            </span>
           </Link>
-        ) : <span />}
+        ) : (
+          <span />
+        )}
         {next ? (
           <Link
             href={`/corsi/${slug}/${next.slug}`}
-            className="text-sm text-accent no-underline hover:text-text transition-colors text-right"
+            className="group flex flex-col gap-1 max-w-[45%] text-right ml-auto"
           >
-            {next.titolo} →
+            <span className="label text-text-muted">Successiva →</span>
+            <span className="text-sm group-hover:text-text-muted transition-colors">
+              {next.titolo}
+            </span>
           </Link>
-        ) : <span />}
+        ) : (
+          <span />
+        )}
       </nav>
     </div>
   )
