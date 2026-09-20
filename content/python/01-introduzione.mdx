@@ -33,24 +33,33 @@ Apri un editor di testo, scrivi questa riga e salva il file come `ciao.py`:
 
 ```python
 print("Ciao, mondo")
+```
+
 Apri il terminale nella cartella del file ed esegui:
 
-bash
+```
 python ciao.py
+```
+
 Vedrai stampato a schermo:
 
-text
+```
 Ciao, mondo
-print è una funzione incorporata. Le parentesi contengono quello che vuoi mostrare. Le virgolette dicono a Python che quella sequenza di caratteri è una stringa, cioè testo.
+```
 
-Differenza tra script e REPL
+`print` è una funzione incorporata. Le parentesi contengono quello che vuoi mostrare. Le virgolette dicono a Python che quella sequenza di caratteri è una stringa, cioè testo.
+
+## Differenza tra script e REPL
+
 Puoi anche lanciare solo:
 
-bash
+```
 python
-Si apre il REPL (Read-Eval-Print Loop). Vedi un prompt >>> e puoi scrivere istruzioni una alla volta:
+```
 
-text
+Si apre il REPL (Read-Eval-Print Loop). Vedi un prompt `>>>` e puoi scrivere istruzioni una alla volta:
+
+```
 >>> 2 + 3
 5
 >>> print("ciao")
@@ -58,102 +67,118 @@ ciao
 >>> nome = "Marco"
 >>> nome
 'Marco'
+```
+
 Il REPL è comodissimo per provare piccole cose. Lo script serve invece quando il programma diventa lungo o quando vuoi salvarlo e riutilizzarlo.
 
-Commenti
-Un commento inizia con # e arriva fino a fine riga. Python lo ignora.
+## Commenti
 
-python
+Un commento inizia con `#` e arriva fino a fine riga. Python lo ignora.
+
+```python
 # Questo è un commento
 print("ciao")  # anche questo è un commento
+```
+
 I commenti servono a spiegare il perché di una scelta, non a ripetere quello che il codice già dice. Un commento inutile è peggio di nessun commento.
 
-Errori comuni
-Dimenticare le virgolette. Se scrivi print(ciao) invece di print("ciao"), Python cerca una variabile chiamata ciao e non la trova:
+## Errori comuni
 
-text
+**Dimenticare le virgolette.** Se scrivi `print(ciao)` invece di `print("ciao")`, Python cerca una variabile chiamata `ciao` e non la trova:
+
+```
 NameError: name 'ciao' is not defined
-Dimenticare le parentesi. In Python 3 print è una funzione, quindi le parentesi sono obbligatorie. print "ciao" dà:
+```
 
-text
+**Dimenticare le parentesi.** In Python 3 `print` è una funzione, quindi le parentesi sono obbligatorie. `print "ciao"` dà:
+
+```
 SyntaxError: Missing parentheses in call to 'print'
-Usare la maiuscola sbagliata. Python distingue maiuscole e minuscole. Print non esiste. nome e Nome sono due variabili diverse.
+```
 
-Indentazione a caso. In Python l'indentazione non è decorativa: definisce i blocchi. Se metti uno spazio di troppo all'inizio di una riga senza motivo, ottieni:
+**Usare la maiuscola sbagliata.** Python distingue maiuscole e minuscole. `Print` non esiste. `nome` e `Nome` sono due variabili diverse.
 
-text
+**Indentazione a caso.** In Python l'indentazione non è decorativa: definisce i blocchi. Se metti uno spazio di troppo all'inizio di una riga senza motivo, ottieni:
+
+```
 IndentationError: unexpected indent
-Buone pratiche
-Dai al file un nome che descriva cosa fa, con parole separate da underscore: calcola_media.py, non prova.py.
+```
 
-Non usare accenti o spazi nei nomi dei file. Meglio perche.py che perché.py.
+## Buone pratiche
 
-Salva i file in una cartella dedicata al progetto.
+- Dai al file un nome che descriva cosa fa, con parole separate da underscore: `calcola_media.py`, non `prova.py`.
+- Non usare accenti o spazi nei nomi dei file. Meglio `perche.py` che `perché.py`.
+- Salva i file in una cartella dedicata al progetto.
+- Esegui sempre lo script dal terminale almeno una volta, anche se usi un IDE: capire cosa succede sotto è parte dell'imparare.
 
-Esegui sempre lo script dal terminale almeno una volta, anche se usi un IDE: capire cosa succede sotto è parte dell'imparare.
+## Scorciatoie utili
 
-Scorciatoie utili
 A seconda dell'editor che usi:
 
-Azione	VS Code (Windows/Linux)	VS Code (macOS)
-Esegui il file aperto	Ctrl + F5	Cmd + F5
-Apri il terminale	Ctrl + ò	Cmd + ò
-Salva	Ctrl + S	Cmd + S
-Commenta la riga	Ctrl + /	Cmd + /
+| Azione | VS Code (Windows/Linux) | VS Code (macOS) |
+|---|---|---|
+| Esegui il file aperto | Ctrl + F5 | Cmd + F5 |
+| Apri il terminale | Ctrl + ò | Cmd + ò |
+| Salva | Ctrl + S | Cmd + S |
+| Commenta la riga | Ctrl + / | Cmd + / |
+
 Nel terminale:
 
-Comando	Cosa fa
-python --version	Mostra la versione di Python
-python file.py	Esegue il file
-python	Apre il REPL
-exit()	Chiude il REPL
-Esercizi guidati
-Esercizio 1. Scrivi un file presentazione.py che stampa a schermo il tuo nome.
+| Comando | Cosa fa |
+|---|---|
+| `python --version` | Mostra la versione di Python |
+| `python file.py` | Esegue il file |
+| `python` | Apre il REPL |
+| `exit()` | Chiude il REPL |
+
+## Esercizi guidati
+
+**Esercizio 1.** Scrivi un file `presentazione.py` che stampa a schermo il tuo nome.
 
 Soluzione:
 
-python
+```python
 print("Marco")
-Esercizio 2. Modifica il file in modo che stampi nome e città su due righe separate, usando due chiamate a print.
+```
+
+**Esercizio 2.** Modifica il file in modo che stampi nome e città su due righe separate, usando due chiamate a `print`.
 
 Soluzione:
 
-python
+```python
 print("Marco")
 print("Torino")
-Esercizio 3. Aggiungi un commento sopra ogni print che spieghi cosa stai stampando.
+```
+
+**Esercizio 3.** Aggiungi un commento sopra ogni `print` che spieghi cosa stai stampando.
 
 Soluzione:
 
-python
+```python
 # Stampa il mio nome
 print("Marco")
 
 # Stampa la mia città
 print("Torino")
-Esercizi autonomi
-Scrivi uno script che stampi il tuo nome, la tua età e la tua classe, ognuno su una riga.
+```
 
-Prova a scrivere print("ciao" senza chiudere la parentesi ed esegui. Copia l'errore che ottieni e cerca di capire cosa ti sta dicendo.
+## Esercizi autonomi
 
-Apri il REPL e calcola a mano 7 * 6, 100 / 4, 2 ** 10. Poi esegui le stesse operazioni in un file .py e confronta i risultati.
+1. Scrivi uno script che stampi il tuo nome, la tua età e la tua classe, ognuno su una riga.
+2. Prova a scrivere `print("ciao"` senza chiudere la parentesi ed esegui. Copia l'errore che ottieni e cerca di capire cosa ti sta dicendo.
+3. Apri il REPL e calcola a mano `7 * 6`, `100 / 4`, `2 ** 10`. Poi esegui le stesse operazioni in un file `.py` e confronta i risultati.
 
-Riepilogo
-Python è un linguaggio interpretato, ad alto livello, con tipizzazione dinamica.
+## Riepilogo
 
-Un programma si scrive in un file .py e si esegue con python file.py.
+- Python è un linguaggio interpretato, ad alto livello, con tipizzazione dinamica.
+- Un programma si scrive in un file `.py` e si esegue con `python file.py`.
+- Il REPL permette di provare istruzioni una alla volta.
+- `print()` mostra testo a schermo.
+- I commenti iniziano con `#`.
+- L'indentazione in Python fa parte della sintassi.
 
-Il REPL permette di provare istruzioni una alla volta.
+## Lezioni correlate
 
-print() mostra testo a schermo.
-
-I commenti iniziano con #.
-
-L'indentazione in Python fa parte della sintassi.
-
-Lezioni correlate
-Prossima: variabili e tipi di dati.
-
-Approfondimento: installazione di Python su Windows, macOS e Linux.
-
-Riferimento ufficiale: docs.python.org
+- Prossima: variabili e tipi di dati.
+- Approfondimento: installazione di Python su Windows, macOS e Linux.
+- Riferimento ufficiale: [docs.python.org](https://docs.python.org/3/tutorial/)
